@@ -20,6 +20,7 @@ dependencyResolutionManagement {
 
 include(":navcompose")
 include(":examples:singlemodule:composeApp")
+include(":examples:scaffoldandfullscreen:composeApp")
 include(":examples:multimoduleflatstructure:composeApp")
 include(":examples:multimoduleflatstructure:home")
 include(":examples:multimodulenestedstructure:composeApp")

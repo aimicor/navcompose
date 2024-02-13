@@ -26,6 +26,9 @@ SOFTWARE.
 
 
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
+import androidx.navigation.navOptions
 import com.aimicor.navcompose.common.navComposableSpec
 import com.aimicor.navcompose.common.navGroupRoute
 import com.aimicor.navcompose.common.navParamSpec
@@ -40,7 +43,7 @@ import kotlin.test.assertTrue
 class NavControllerNavigateTest {
 
     private val navController = mockk<NavController> {
-        every { navigate(any<String>()) } just runs
+        every { navigate(any<String>(), any(), any()) } just runs
     }
     private val route = navComposableSpec()
 
@@ -55,6 +58,25 @@ class NavControllerNavigateTest {
 
         // Then
         verify { navController.navigate(routeKey) }
+    }
+
+    @Test
+    fun GIVEN_a_route_WHEN_navigating_with_all_parameters_THEN_parameters_passed_on() {
+        // Given
+        val routeKey = "test1"
+        val composableSpec = navComposableSpec(path = routeKey)
+        val navOptions: NavOptions = navOptions { launchSingleTop = true }
+        val navigatorExtras = object : Navigator.Extras {}
+
+        // When
+        navController.navigate(
+            composableSpec,
+            navOptions = navOptions,
+            navigatorExtras = navigatorExtras
+        )
+
+        // Then
+        verify { navController.navigate(routeKey, navOptions, navigatorExtras) }
     }
 
     @Test
@@ -92,7 +114,7 @@ class NavControllerNavigateTest {
     }
 
 
-        @Test
+    @Test
     fun GIVEN_a_default_route_WHEN_navigating_THEN_correct_route_created() {
         // When
         navController.navigate(route)
@@ -108,15 +130,16 @@ class NavControllerNavigateTest {
         val value = ComplexThing2()
         val paramSpec = navParamSpec<ComplexThing2>()
         val route = navComposableSpec(paramSpec)
+        val navOptions: NavOptions = navOptions { launchSingleTop = true }
 
         // When
-        navController.navigate(route, paramSpec with value)
+        navController.navigate(route, paramSpec with value, navOptions = navOptions)
 
         // Then
         verify {
             navController.navigate(
-                route.path +
-                        "?${paramSpec.key}=${encode(value)}"
+                "${route.path}?${paramSpec.key}=${encode(value)}",
+                navOptions = navOptions
             )
         }
     }
@@ -129,16 +152,23 @@ class NavControllerNavigateTest {
         val value2 = 123f
         val paramSpec2 = navParamSpec<Float>()
         val route = navComposableSpec(paramSpec1, paramSpec2)
+        val navOptions: NavOptions = navOptions { launchSingleTop = true }
 
         // When
-        navController.navigate(route, paramSpec1 with value1, paramSpec2 with value2)
+        navController.navigate(
+            route,
+            paramSpec1 with value1,
+            paramSpec2 with value2,
+            navOptions = navOptions
+        )
 
         // Then
         verify {
             navController.navigate(
                 route.path +
                         "?${paramSpec1.key}=${encode(value1)}" +
-                        "&${paramSpec2.key}=${encode(value2)}"
+                        "&${paramSpec2.key}=${encode(value2)}",
+                navOptions = navOptions
             )
         }
     }

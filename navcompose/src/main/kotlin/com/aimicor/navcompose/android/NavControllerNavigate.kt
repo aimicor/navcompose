@@ -25,6 +25,8 @@ SOFTWARE.
 */
 
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 import com.aimicor.navcompose.common.NavComposable
 import com.aimicor.navcompose.common.NavComposableSpec
 import com.aimicor.navcompose.common.NavComposeParamValue
@@ -34,18 +36,22 @@ import com.aimicor.navcompose.common.toRoute
  * Navigates to another composable screen.
  * @param composable The key object of the screen or composable to navigate too.
  * @param params The list of argument key value pairs to be passed to the destination composable screen.
+ * @param navOptions special options for this navigation operation
+ * @param navigatorExtras extras to pass to the [Navigator]
  */
 fun NavController.navigate(
     composable: NavComposable,
-    vararg params: NavComposeParamValue<*>
+    vararg params: NavComposeParamValue<*>,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null
 ) = when (composable) {
     is NavComposableSpec -> {
         composable.params.assertMatching(params)
-        navigate(params.asList().toRoute(composable.path) { "${key}=${encode(value)}" })
+        params.asList().toRoute(composable.path) { "${key}=${encode(value)}" }
     }
 
     else -> {
         if (params.isNotEmpty()) throw UnexpectedParamsException()
-        navigate(composable.route)
+        composable.route
     }
-}
+}.also { navigate(it, navOptions, navigatorExtras) }

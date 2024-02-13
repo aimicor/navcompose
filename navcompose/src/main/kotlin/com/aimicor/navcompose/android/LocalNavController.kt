@@ -25,13 +25,13 @@ SOFTWARE.
 */
 
 import androidx.compose.runtime.compositionLocalOf
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 /**
- * Provides an instance of the NavController within the scope of the NavHost.
+ * Provides an instance of the NavHostController within the scope of the NavHost.
  * @see compositionLocalOf
  * @see com.aimicor.navcompose.android.NavHost
  */
 
 val LocalNavController =
-    compositionLocalOf<NavController> { error("Local NavHostController not set. Use NavHost that takes NavComposable as start destination") }
+    compositionLocalOf<NavHostController> { error("Local NavHostController not set. Use NavHost that takes NavComposable as start destination") }

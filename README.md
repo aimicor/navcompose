@@ -17,7 +17,7 @@ This is an extension library for Google's [navigation-compose](https://developer
 Include the libraries (legacy)
 ```kotlin dsl
 dependencies {
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.aimicor:navcompose-android:[maven-central version]")
 }
@@ -27,7 +27,7 @@ Include the libraries (version catalogs)
 // libs.versions.toml
 [versions]
 gson = "2.10.1"
-navigation-compose = "2.7.6"
+navigation-compose = "2.7.7"
 navcompose-android = "[maven-central version]"
 
 [libraries]
