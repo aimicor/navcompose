@@ -25,12 +25,11 @@ SOFTWARE.
 */
 
 import android.app.Activity
-import android.content.Context
 import androidx.navigation.NavController
 
 /**
  * NavController tries to pop the BackStack back onto the previous screen.
  */
-fun NavController.goBack(context: Context) {
+fun NavController.goBack() {
     if(!popBackStack()) (context as? Activity)?.finish()
 }
