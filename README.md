@@ -1,3 +1,10 @@
+# Deprecated
+
+This library is now deprecated, as Google have released version 2.8 of [navigation-compose](https://www.youtube.com/watch?v=8m1W4PyYMYQ) that introduces type-safety.
+For further information see [Edgar Miró's medium.com article](https://medium.com/mercadona-tech/type-safety-in-navigation-compose-23c03e3d74a5). This article, as well as other sources around the web suggest that the generalised template inline functions used to map custom nav types, as trivial as they are, might benefit from being shared in a library.
+
+---
+
 #  NavCompose
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aimicor/navcompose/blob/master/LICENSE)
